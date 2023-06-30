@@ -1,23 +1,19 @@
 import React from "react";
-import mondaySdk from "monday-sdk-js";
+import { Router, Route } from "react-router-dom";
+
+import history from "./history";
+import Home from "./views/Home";
+
 
 const App = () =>  {
-    const monday = mondaySdk();
 
-    monday.api(`query { boards { id, name, items { id, name} }} `).then(res => {
-        console.log(res);
-    });
-
-    // const bla = monday.api(
-    //     "query { countries }"
-    // ).then(res => console.log(res));
-    //
-    // console.log(bla);
-  return (
-    <div>
-      <h1>Hello World</h1>
-    </div>
-  );
+    return(
+        <>
+         <Router history={history}>
+            <Route path="/" exact component={Home} />
+         </Router>
+        </>
+    );
 };
 
 export default App;
