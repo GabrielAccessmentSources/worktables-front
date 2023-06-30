@@ -21,8 +21,8 @@ module.exports = {
     ],
     "rules": {
         semi: [2, "always"],
-        "quotes": [2, "double", { "avoidEscape": true }],
+        // "quotes": [2, "double", { "avoidEscape": true }],
         "object-curly-spacing": ["error", "always"],
-        "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1 }]
+        "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1 }],
     }
-}
+};
