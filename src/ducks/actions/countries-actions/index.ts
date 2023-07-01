@@ -27,6 +27,8 @@ export const fetchCountries = () => async (dispatch: any) => {
         const response: ResponseData = await monday.api(`query { boards { id, name, items { id, name } } }`);
         const items: Array<Item> = response.data.boards[0].items;
 
+        // console.log(items);
+
         dispatch({ type: FETCH_COUNTRIES, payload: items });
     } catch(error) {
         console.error("Error: ", error);

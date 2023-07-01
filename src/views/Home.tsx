@@ -3,13 +3,11 @@ import { connect } from "react-redux";
 
 import { fetchCountries } from "../ducks/actions/countries-actions";
 
-
 const Home = (state: any) => {
     useEffect(() => {
         state.fetchCountries();
     }, []);
 
-    console.log(state);
     return (
         <div>
             <h1>Hey There</h1>
@@ -18,12 +16,10 @@ const Home = (state: any) => {
 };
 
 const mapStateToProps = (state: any) => {
-    return state;
+    return { countries: state.countries };
 };
-
 
 export default connect(
     mapStateToProps,
     { fetchCountries }
 )(Home);
-// export default Home;

@@ -4,7 +4,6 @@ import { Router, Route } from "react-router-dom";
 import history from "./history";
 import Home from "./views/Home";
 
-
 const App = () =>  {
 
     return(
