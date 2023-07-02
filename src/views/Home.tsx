@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
 import { fetchCountries } from "../ducks/actions/countries-actions";
+import { SearchBar } from "../components/molecules/search-bar";
+import CountriesList from "../components/organisms/countries-list";
 
 const Home = (state: any) => {
     useEffect(() => {
@@ -10,7 +12,14 @@ const Home = (state: any) => {
 
     return (
         <div>
-            <h1>Hey There</h1>
+            <div>
+                <SearchBar/>
+            </div>
+            <div>
+                <CountriesList
+                    allCountries={state.countries}
+                />
+            </div>
         </div>
     );
 };

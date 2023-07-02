@@ -24,13 +24,37 @@ export const fetchCountries = () => async (dispatch: any) => {
     try {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        const response: ResponseData = await monday.api(`query { boards { id, name, items { id, name } } }`);
+        const response: ResponseData = await monday.api(`
+                query { 
+                    boards { 
+                        id, 
+                        name, 
+                        items { 
+                            id, 
+                            name,
+                            column_values {
+                                id,
+                                value
+                            }
+                        }
+                    } 
+                }`
+        );
         const items: Array<Item> = response.data.boards[0].items;
-
-        // console.log(items);
 
         dispatch({ type: FETCH_COUNTRIES, payload: items });
     } catch(error) {
+        console.error("Error: ", error);
+        return null;
+    }
+};
+
+export const fetchCountryDetails = ( id: string ) => async (dispatch: any) => {
+    try{
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const response: ResponseData = await monday.api(`query { boards { id, name, items { id, name } } }`);
+    } catch (error) {
         console.error("Error: ", error);
         return null;
     }
