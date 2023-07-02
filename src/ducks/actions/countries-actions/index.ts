@@ -45,27 +45,26 @@ export const fetchCountries = () => async (dispatch: any) => {
     }
 };
 
-export const fetchCountryDetails = ( id: string ) => async (dispatch: any) => {
+export const fetchCountryDetails = (id: string) => async (dispatch: any) => {
     try{
-        console.log("here");
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         const response: ResponseData = await monday.api(`
-                query { 
-                    boards { 
-                        id, 
-                        name, 
-                        items { 
-                            id, 
-                            name,
-                            column_values {
-                                id,
-                                value
-                            }
-                        }
-                    } 
-                }`
-        );
+          query($id: Int!) { 
+            boards {
+              id
+              name
+              items(ids: [$id]){
+                id
+                name,
+                column_values(ids: ["capital"]) {
+                    id,
+                    value
+                }
+              }
+            }
+          }
+        `, { variables: { id: parseInt(id) } });
 
         const items: Array<Item> = response.data.boards[0].items;
 

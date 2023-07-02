@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import "monday-ui-react-core/tokens";
 
 import { fetchCountries } from "../ducks/actions/countries-actions";
 import { SearchBar } from "../components/molecules/search-bar";

@@ -5,12 +5,15 @@ import CustomModal from "./modal";
 
 const CountriesList = ( { allCountries }: any) => {
     const [show, setShow] = useState(false);
+    const [location, setLocation] = useState('');
     const [countryId, setCountryId] = useState('');
 
-    const showModal = (id?: string) => {
-        // setCountryId(id);
-        setShow(!show);
+    const showModal = (country?: any) => {
+        setLocation(country.name);
+        setCountryId(country.id);
+        setShow(true);
     };
+
 
     const renderList = useMemo(() => allCountries.map((country: any) => {
         return(
@@ -18,7 +21,7 @@ const CountriesList = ( { allCountries }: any) => {
             <li>
                 <ListItem
                     id={country.id}
-                    onClick={() => showModal(country.id)}
+                    onClick={() => showModal(country)}
                 >
                     {country.name}
                 </ListItem>
@@ -31,7 +34,9 @@ const CountriesList = ( { allCountries }: any) => {
             {show && (
                 <CustomModal
                     show={show}
-                    onClose={() => showModal()}
+                    onClose={() => setShow(false)}
+                    countryId={countryId}
+                    location={location}
                     fetchCountryDetails={function (): void {
                     throw new Error("Function not implemented.");
                 }}/>
