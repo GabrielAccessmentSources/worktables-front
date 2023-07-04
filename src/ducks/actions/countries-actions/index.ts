@@ -1,7 +1,7 @@
 import mondaySdk from "monday-sdk-js";
 const monday = mondaySdk();
 
-import { FETCH_COUNTRIES } from "../types";
+import { FETCH_COUNTRIES, FETCH_COUNTRY_DETAILS } from "../types";
 
 interface Board {
     id: string;
@@ -24,13 +24,55 @@ export const fetchCountries = () => async (dispatch: any) => {
     try {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        const response: ResponseData = await monday.api(`query { boards { id, name, items { id, name } } }`);
+        const response: ResponseData = await monday.api(`
+                query { 
+                    boards { 
+                        id, 
+                        name, 
+                        items { 
+                            id, 
+                            name,
+                        }
+                    } 
+                }`
+        );
         const items: Array<Item> = response.data.boards[0].items;
-
-        // console.log(items);
 
         dispatch({ type: FETCH_COUNTRIES, payload: items });
     } catch(error) {
+        console.error("Error: ", error);
+        return null;
+    }
+};
+
+export const fetchCountryDetails = (id: string) => async (dispatch: any) => {
+    try{
+        console.log("here fucker");
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const response: ResponseData = await monday.api(`
+          query($id: Int!) { 
+            boards {
+              id
+              name
+              items(ids: [$id]){
+                id
+                name,
+                column_values {
+                    id,
+                    value,
+                    title,
+                    text,
+                }
+              }
+            }
+          }
+        `, { variables: { id: parseInt(id) } });
+
+        const countryItems: Array<Item> = response.data.boards[0].items;
+
+        dispatch({ type: FETCH_COUNTRY_DETAILS, payload: countryItems });
+    } catch (error) {
         console.error("Error: ", error);
         return null;
     }
