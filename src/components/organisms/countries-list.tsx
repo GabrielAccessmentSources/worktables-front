@@ -3,7 +3,7 @@ import { List, ListItem } from "monday-ui-react-core";
 
 import CustomModal from "./modal";
 
-const CountriesList = ( { allCountries }: any) => {
+export const CountriesList = ( { allCountries }: any) => {
     const [show, setShow] = useState(false);
     const [location, setLocation] = useState('');
     const [countryId, setCountryId] = useState('');
@@ -42,5 +42,3 @@ const CountriesList = ( { allCountries }: any) => {
         </div>
     );
 };
-
-export default CountriesList;

@@ -16,16 +16,6 @@ const CustomModal = (state: any) => {
         setLoader(false);
     }, []);
 
-    // const renderCountryDetails = useMemo(() => state?.country[2]?.map((country: any) => {
-    //     return(
-    //         <div key={country.id}>
-    //             <h3>{country.title}</h3>
-    //             <p>{country.text}</p>
-    //         </div>
-    //     );
-    // }), [state.country]);
-
-
     const renderCountryDetails = useMemo(() => {
         const findCountryData = state?.country[2]?.map((countryDetail: any) => {
            return(
@@ -44,34 +34,33 @@ const CustomModal = (state: any) => {
                 </div>
                 <Flex direction={Flex.directions.COLUMN} justify={Flex.justify.START} align={Flex.align.START}>
                     <Title type={"h3"} weight="bold">Condition</Title>
-                    <Text>{weatherData.condition?.text}</Text>
+                    <Text>{weatherData?.condition?.text}</Text>
 
                     <Title type={"h3"} weight="bold" >Feels Like °C</Title>
-                    <Text align={"center"}>{weatherData.feelslike_c} °c</Text>
+                    <Text align={"center"}>{weatherData?.feelslike_c} °c</Text>
 
                     <Title type={"h3"} weight="bold">Feels Like °F</Title>
-                    <Text align={"center"}>{weatherData.feelslike_f} °c</Text>
+                    <Text align={"center"}>{weatherData?.feelslike_f} °c</Text>
 
                     <Title type={"h3"} weight="bold">Temperature °C</Title>
-                    <Text align={"center"}>{weatherData.temp_c} °c</Text>
+                    <Text align={"center"}>{weatherData?.temp_c} °c</Text>
 
                     <Title type={"h3"} weight="bold">Temperature °F</Title>
-                    <Text align={"center"}>{weatherData.temp_f} °f</Text>
+                    <Text align={"center"}>{weatherData?.temp_f} °f</Text>
 
                     <Title type={"h3"} weight="bold">Humidity</Title>
-                    <Text align={"center"}>{weatherData.humidity}</Text>
+                    <Text align={"center"}>{weatherData?.humidity}</Text>
 
                     <Title type={"h3"} weight="bold">Wind Km</Title>
-                    <Text align={"center"}>{weatherData.wind_kph}</Text>
+                    <Text align={"center"}>{weatherData?.wind_kph}</Text>
 
                     <Title type={"h3"} weight="bold">Last Updated At</Title>
-                    <Text align={"center"}>{weatherData.last_updated}</Text>
+                    <Text align={"center"}>{weatherData?.last_updated}</Text>
                 </Flex>
             </>
         );
     }, [state.country, state.weather]);
 
-    console.log(state.weather.current);
     return(
         <Modal
             id="story-book-modal"
@@ -91,7 +80,6 @@ const CustomModal = (state: any) => {
         </Modal>
     );
 };
-
 
 const mapStateToProps = (state: any, ownProps: any) => {
     return {

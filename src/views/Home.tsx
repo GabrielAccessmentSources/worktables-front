@@ -4,7 +4,7 @@ import "monday-ui-react-core/tokens";
 
 import { fetchCountries } from "../ducks/actions/countries-actions";
 import { SearchBar } from "../components/molecules/search-bar";
-import CountriesList from "../components/organisms/countries-list";
+import { CountriesList } from "../components/organisms/countries-list";
 
 const Home = (state: any) => {
     useEffect(() => {
