@@ -1,72 +1,106 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Modal, ModalContent, Loader } from "monday-ui-react-core";
+import { Modal, ModalContent, Loader, Text, Flex, Title } from "monday-ui-react-core";
 import { connect } from "react-redux";
 import "monday-ui-react-core/tokens";
 
 import { fetchCountryDetails } from "../../ducks/actions/countries-actions";
 import { fetchWeather } from "../../ducks/actions/weather-actions";
 
-const CustomModal = (props: any) => {
+const CustomModal = (state: any) => {
     const [loader, setLoader] = useState(true);
 
     useEffect(() => {
-        if (props.show) {
-            setLoader(true);
-            props.fetchCountryDetails(props.countryId).then(() => {
-                setLoader(false);
-            });
-        }
-    }, [props.show]);
+        setLoader(true);
+        state.fetchCountryDetails(state.countryId);
+        state.fetchWeather(state.location);
+        setLoader(false);
+    }, []);
 
-    console.log(props);
-
-    // useEffect(() => {
-    //     let isMounted = true;
-    //
-    //     const fetchData = async () => {
-    //         await props.fetchCountryDetails();
-    //         await props.fetchWeather(props.location);
-    //
-    //         if (isMounted) {
-    //             setLoader(false);
-    //         }
-    //     };
-    //
-    //     fetchData();
-    //
-    //     return () => {
-    //         isMounted = false;
-    //     };
-    // }, []);
+    // const renderCountryDetails = useMemo(() => state?.country[2]?.map((country: any) => {
+    //     return(
+    //         <div key={country.id}>
+    //             <h3>{country.title}</h3>
+    //             <p>{country.text}</p>
+    //         </div>
+    //     );
+    // }), [state.country]);
 
 
+    const renderCountryDetails = useMemo(() => {
+        const findCountryData = state?.country[2]?.map((countryDetail: any) => {
+           return(
+               <Flex direction={Flex.directions.COLUMN} justify={Flex.justify.START} align={Flex.align.START} key={countryDetail.id}>
+                   <Title type={"h3"} weight="bold">{countryDetail.title}</Title>
+                   <Text align={"center"}>{countryDetail.text}</Text>
+               </Flex>
+           ); 
+        });
+
+        const weatherData = state?.weather?.current;
+        return(
+            <>
+                <div>
+                    {findCountryData}
+                </div>
+                <Flex direction={Flex.directions.COLUMN} justify={Flex.justify.START} align={Flex.align.START}>
+                    <Title type={"h3"} weight="bold">Condition</Title>
+                    <Text>{weatherData.condition?.text}</Text>
+
+                    <Title type={"h3"} weight="bold" >Feels Like °C</Title>
+                    <Text align={"center"}>{weatherData.feelslike_c} °c</Text>
+
+                    <Title type={"h3"} weight="bold">Feels Like °F</Title>
+                    <Text align={"center"}>{weatherData.feelslike_f} °c</Text>
+
+                    <Title type={"h3"} weight="bold">Temperature °C</Title>
+                    <Text align={"center"}>{weatherData.temp_c} °c</Text>
+
+                    <Title type={"h3"} weight="bold">Temperature °F</Title>
+                    <Text align={"center"}>{weatherData.temp_f} °f</Text>
+
+                    <Title type={"h3"} weight="bold">Humidity</Title>
+                    <Text align={"center"}>{weatherData.humidity}</Text>
+
+                    <Title type={"h3"} weight="bold">Wind Km</Title>
+                    <Text align={"center"}>{weatherData.wind_kph}</Text>
+
+                    <Title type={"h3"} weight="bold">Last Updated At</Title>
+                    <Text align={"center"}>{weatherData.last_updated}</Text>
+                </Flex>
+            </>
+        );
+    }, [state.country, state.weather]);
+
+    console.log(state.weather.current);
     return(
         <Modal
             id="story-book-modal"
             width={Modal.width.FULL_WIDTH}
             data-testid={""}
-            show={props.show}
-            title={props.location}
-            onClose={() => props.onClose()}
+            show={state.show}
+            title={state.location}
+            onClose={() => state.onClose()}
         >
             {loader ? (
                 <Loader size={40}/>
             ) : (
                 <ModalContent>
-                    <p>
-                        Modal content goes here
-                    </p>
+                    {renderCountryDetails}
                 </ModalContent>
             )}
         </Modal>
     );
 };
 
-const mapStateToProps = (state: any) => {
-    return { countryDetails: state };
+
+const mapStateToProps = (state: any, ownProps: any) => {
+    return {
+        country: Object.values(state.countries[ownProps.countryId]),
+        weather: state.weather
+    };
 };
+
 export default connect(
     mapStateToProps,
-    { fetchCountryDetails }
-    // { fetchCountryDetails, fetchWeather }
+    { fetchCountryDetails, fetchWeather }
 )(CustomModal);

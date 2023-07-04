@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, memo } from "react";
 import { connect } from "react-redux";
 import "monday-ui-react-core/tokens";
 
@@ -25,8 +25,9 @@ const Home = (state: any) => {
     );
 };
 
+
 const mapStateToProps = (state: any) => {
-    return { countries: state.countries };
+    return { countries: Object.values(state.countries) };
 };
 
 export default connect(

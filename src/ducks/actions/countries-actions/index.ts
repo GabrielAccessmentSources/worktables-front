@@ -47,6 +47,7 @@ export const fetchCountries = () => async (dispatch: any) => {
 
 export const fetchCountryDetails = (id: string) => async (dispatch: any) => {
     try{
+        console.log("here fucker");
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         const response: ResponseData = await monday.api(`
@@ -57,18 +58,20 @@ export const fetchCountryDetails = (id: string) => async (dispatch: any) => {
               items(ids: [$id]){
                 id
                 name,
-                column_values(ids: ["capital"]) {
+                column_values {
                     id,
-                    value
+                    value,
+                    title,
+                    text,
                 }
               }
             }
           }
         `, { variables: { id: parseInt(id) } });
 
-        const items: Array<Item> = response.data.boards[0].items;
+        const countryItems: Array<Item> = response.data.boards[0].items;
 
-        dispatch({ type: FETCH_COUNTRY_DETAILS, payload: items });
+        dispatch({ type: FETCH_COUNTRY_DETAILS, payload: countryItems });
     } catch (error) {
         console.error("Error: ", error);
         return null;
