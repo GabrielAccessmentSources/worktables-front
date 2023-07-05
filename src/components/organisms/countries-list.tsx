@@ -8,6 +8,12 @@ export const CountriesList = ( { allCountries }: any) => {
     const [location, setLocation] = useState('');
     const [countryId, setCountryId] = useState('');
 
+
+    // const filteredCountries = countries.filter((country) =>
+    //     country.name.toLowerCase().includes(searchQuery.toLowerCase())
+    // );
+
+
     const showModal = useCallback((country? :any) => {
             setLocation(country.name);
             setCountryId(country.id);
