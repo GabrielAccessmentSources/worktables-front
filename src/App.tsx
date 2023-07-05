@@ -5,7 +5,6 @@ import history from "./history";
 import Home from "./views/Home";
 
 const App = () =>  {
-
     return(
         <>
          <Router history={history}>

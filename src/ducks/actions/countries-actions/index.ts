@@ -2,42 +2,16 @@ import mondaySdk from "monday-sdk-js";
 const monday = mondaySdk();
 
 import { FETCH_COUNTRIES, FETCH_COUNTRY_DETAILS } from "../types";
+import { ResponseDataType, ItemType, DispatchType } from "../../../helpers/ducks-types";
+import { GetCountriesQuery, GetCountryDetailsQuery } from "../../../api/queries/monday-gql-queries";
 
-interface Board {
-    id: string;
-    name: string;
-    items: Array<Item>;
-}
-
-interface Item {
-    id: string;
-    name: string;
-}
-
-interface ResponseData {
-    data: {
-        boards: Array<Board>;
-    };
-}
-
-export const fetchCountries = () => async (dispatch: any) => {
+export const fetchCountries = () => async (dispatch: ({ type, payload }: DispatchType) => void) => {
     try {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const response: ResponseData = await monday.api(`
-                query { 
-                    boards { 
-                        id, 
-                        name, 
-                        items { 
-                            id, 
-                            name,
-                        }
-                    } 
-                }`
-        );
-        const items: Array<Item> = response.data.boards[0].items;
+        // @ts-expect-error: Ignoring TypeScript error for this line
+        const response: ResponseDataType = await monday.api(GetCountriesQuery);
+        const items: Array<ItemType> = response.data.boards[0].items;
 
+        // @ts-expect-error: Ignoring TypeScript error for this line
         dispatch({ type: FETCH_COUNTRIES, payload: items });
     } catch(error) {
         console.error("Error: ", error);
@@ -45,32 +19,16 @@ export const fetchCountries = () => async (dispatch: any) => {
     }
 };
 
-export const fetchCountryDetails = (id: string) => async (dispatch: any) => {
+export const fetchCountryDetails = (id: string) => async (dispatch: ({ type, payload }: DispatchType) => void) => {
     try{
-        console.log("here fucker");
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const response: ResponseData = await monday.api(`
-          query($id: Int!) { 
-            boards {
-              id
-              name
-              items(ids: [$id]){
-                id
-                name,
-                column_values {
-                    id,
-                    value,
-                    title,
-                    text,
-                }
-              }
-            }
-          }
-        `, { variables: { id: parseInt(id) } });
+        const response = await monday.api(GetCountryDetailsQuery,
+            { variables: { id: parseInt(id) } }
+        );
 
-        const countryItems: Array<Item> = response.data.boards[0].items;
+        // @ts-expect-error: Ignoring TypeScript error for this line
+        const countryItems: Array<ItemType> = response.data.boards[0].items;
 
+        // @ts-expect-error: Ignoring TypeScript error for this line
         dispatch({ type: FETCH_COUNTRY_DETAILS, payload: countryItems });
     } catch (error) {
         console.error("Error: ", error);

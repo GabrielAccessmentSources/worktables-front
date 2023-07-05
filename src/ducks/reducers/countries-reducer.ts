@@ -5,7 +5,9 @@ import {
     FETCH_COUNTRY_DETAILS
 } from "../actions/types";
 
-export default (state= [], action: any) => {
+import { ActionType } from "../../helpers/ducks-types";
+
+export default (state= [], action: ActionType) => {
     switch (action.type) {
         case FETCH_COUNTRIES:
             return { ..._.mapKeys(action.payload, 'id') };
