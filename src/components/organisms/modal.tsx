@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import { Modal, ModalContent, Loader, Text, Flex, Title } from "monday-ui-react-core";
 import { connect } from "react-redux";
 import "monday-ui-react-core/tokens";
+import dayjs from "dayjs";
 
 import { fetchCountryDetails } from "../../ducks/actions/countries-actions";
 import { fetchWeather } from "../../ducks/actions/weather-actions";
@@ -57,7 +58,7 @@ const CustomModal = (state: ModalStateType) => {
                     <Text align={"center"}>{weatherData?.wind_kph}</Text>
 
                     <Title type={"h3"} weight="bold">Last Updated At</Title>
-                    <Text align={"center"}>{weatherData?.last_updated}</Text>
+                    <Text align={"center"}>{dayjs(weatherData?.last_updated).format('MMMM D, YYYY h:mm A')}</Text>
                 </Flex>
             </>
         );
