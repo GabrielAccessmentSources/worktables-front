@@ -1,6 +1,7 @@
 export type CountryType = {
     id: string;
     name: string;
+    value: string
 }
 
 type ParamsType = {
@@ -32,39 +33,54 @@ export type WeatherDataType = {
         code: number;
     };
     feelslike_c: number | any;
-    feelslike_f: number;
-    gust_kph: number;
-    gust_mph: number;
-    humidity: number;
-    is_day: number;
+    feelslike_f: number | any;
+    humidity: string;
     last_updated: string;
-    last_updated_epoch: number;
-    precip_in: number;
-    precip_mm: number;
-    pressure_in: number;
-    pressure_mb: number;
-    temp_c: number;
-    temp_f: number;
-    uv: number;
-    vis_km: number;
-    vis_miles: number;
-    wind_degree: number;
-    wind_dir: string;
-    wind_kph: number;
-    wind_mph: number;
+    temp_c: number | any;
+    temp_f: number | any;
+    wind_kph: string;
+}
+
+type CountryData =  {
+    country: [string, string, Array<CountryAttribute>];
+    [key: string]: any;
+}
+
+export type CountryAttribute = {
+    id: string;
+    value: string;
+    title: string;
+    text: string;
+}
+
+export type WeatherLocationType = {
+    country: string;
+    lat: number;
+    localtime: string;
+    localtime_epoch: number;
+    lon: number;
+    name: string;
+    region: string;
+    tz_id: string;
 }
 
 export type ModalStateType = {
-    countries: any;
-    weather: any;
+    fetchCountryDetails: (countryId: string) => void;
+    fetchWeather: (location: string) => void;
+    location: string;
+    countryId: string;
+    // This is the correct type, but redux is annoying about this
+    // country: CountryData[] ;
+    country: any;
+    countries?: CountryData | undefined;
+    weather: {
+        current: WeatherDataType;
+        location: WeatherLocationType
+    };
+    show: boolean;
+    onClose: () => void;
 }
 
 export type OwnPropsType = {
     countryId: string;
-}
-
-export type SearchEventType = {
-    target: {
-        value: string
-    }
 }

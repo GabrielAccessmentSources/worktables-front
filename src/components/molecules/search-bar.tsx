@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from "react";
 
 // The Search didnt worked well with onChange and value, so I changed to
-// standard html input.
+// standard html input because I wanted to search while typing not send an event.
 import { Search } from "monday-ui-react-core";
 
 export const SearchBar = ({ searchQuery, setSearchQuery }: {

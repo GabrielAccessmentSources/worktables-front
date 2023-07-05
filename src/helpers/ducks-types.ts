@@ -28,12 +28,6 @@ export type ResponseDataType = {
     };
 };
 
-// export type ResponseDataType =  {
-//     data: {
-//         boards: Array<BoardType>;
-//     };
-// }
-
 export type DispatchType = {
     type: string;
     payload: {

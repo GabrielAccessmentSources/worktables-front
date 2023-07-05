@@ -5,9 +5,9 @@ import "monday-ui-react-core/tokens";
 
 import { fetchCountryDetails } from "../../ducks/actions/countries-actions";
 import { fetchWeather } from "../../ducks/actions/weather-actions";
-import { ModalStateType, OwnPropsType } from "../../helpers/types";
+import { CountryAttribute, ModalStateType, OwnPropsType } from "../../helpers/types";
 
-const CustomModal = (state: any) => {
+const CustomModal = (state: ModalStateType) => {
     const [loader, setLoader] = useState(true);
 
     useEffect(() => {
@@ -18,7 +18,7 @@ const CustomModal = (state: any) => {
     }, []);
 
     const renderCountryDetails = useMemo(() => {
-        const findCountryData = state?.country[2]?.map((countryDetail: any) => {
+        const findCountryData = state?.country[2]?.map((countryDetail: CountryAttribute) => {
            return(
                <Flex direction={Flex.directions.COLUMN} justify={Flex.justify.START} align={Flex.align.START} key={countryDetail.id}>
                    <Title type={"h3"} weight="bold">{countryDetail.title}</Title>
@@ -27,7 +27,7 @@ const CustomModal = (state: any) => {
            ); 
         });
 
-        const weatherData: any = state?.weather?.current;
+        const weatherData = state?.weather?.current;
 
         return(
             <>
@@ -84,8 +84,9 @@ const CustomModal = (state: any) => {
 };
 
 const mapStateToProps = (state: ModalStateType, ownProps: OwnPropsType) => {
+    const countryData = state.countries && state.countries[ownProps.countryId];
     return {
-        country: Object.values(state.countries[ownProps.countryId]),
+        country: countryData ? Object.values(countryData) : [],
         weather: state.weather
     };
 };
