@@ -2,28 +2,25 @@ import React, { useMemo, useState, memo, useCallback } from "react";
 import { List, ListItem } from "monday-ui-react-core";
 
 import CustomModal from "./modal";
+import { CountryType } from "../../helpers/types";
 
-export const CountriesList = ( { allCountries }: any) => {
+export const CountriesList = ( { allCountries }: { allCountries: CountryType[]}) => {
     const [show, setShow] = useState(false);
     const [location, setLocation] = useState('');
     const [countryId, setCountryId] = useState('');
 
-
-    // const filteredCountries = countries.filter((country) =>
-    //     country.name.toLowerCase().includes(searchQuery.toLowerCase())
-    // );
-
-
-    const showModal = useCallback((country? :any) => {
+    const showModal = useCallback((country?: CountryType) => {
+        if (country) {
             setLocation(country.name);
             setCountryId(country.id);
-            setShow(true);
+        }
+        setShow(true);
     }, []);
 
-    const renderList = useMemo(() => allCountries.map((country: any) => {
+    const renderList = useMemo(() => allCountries.map((country: CountryType) => {
         return(
-            // eslint-disable-next-line react/jsx-key
             <ListItem
+                key={country.id}
                 id={country.id}
                 onClick={() => showModal(country)}
             >

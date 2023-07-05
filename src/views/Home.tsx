@@ -34,7 +34,6 @@ const Home = (state: HomeStateType) => {
             <div>
                 <CountriesList
                     allCountries={countriesToShow}
-                    searchQuery={searchQuery}
                 />
             </div>
         </div>
