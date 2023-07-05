@@ -22,7 +22,6 @@ const Home = (state: HomeStateType) => {
     );
     const countriesToShow = searchQuery ? filteredCountries : Object.values(state.countries);
 
-
     return (
         <div>
             <div>

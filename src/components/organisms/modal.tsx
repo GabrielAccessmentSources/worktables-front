@@ -5,6 +5,7 @@ import "monday-ui-react-core/tokens";
 
 import { fetchCountryDetails } from "../../ducks/actions/countries-actions";
 import { fetchWeather } from "../../ducks/actions/weather-actions";
+import { ModalStateType, OwnPropsType } from "../../helpers/types";
 
 const CustomModal = (state: any) => {
     const [loader, setLoader] = useState(true);
@@ -26,7 +27,8 @@ const CustomModal = (state: any) => {
            ); 
         });
 
-        const weatherData = state?.weather?.current;
+        const weatherData: any = state?.weather?.current;
+
         return(
             <>
                 <div>
@@ -81,7 +83,7 @@ const CustomModal = (state: any) => {
     );
 };
 
-const mapStateToProps = (state: any, ownProps: any) => {
+const mapStateToProps = (state: ModalStateType, ownProps: OwnPropsType) => {
     return {
         country: Object.values(state.countries[ownProps.countryId]),
         weather: state.weather

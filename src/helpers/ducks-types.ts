@@ -51,3 +51,8 @@ export type WeatherDispatchType = {
         }
     }
 }
+
+export type ActionType = {
+    type: string;
+    payload: { _id: string }
+}

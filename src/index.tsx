@@ -7,7 +7,6 @@ import reduxThunk from "redux-thunk";
 import App from "./App";
 import reducers from "./ducks/reducers";
 
-
 declare global {
     interface Window {
         __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
