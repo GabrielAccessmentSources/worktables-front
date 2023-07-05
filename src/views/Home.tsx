@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import "monday-ui-react-core/tokens";
-import { Search } from "monday-ui-react-core";
 
 import { fetchCountries } from "../ducks/actions/countries-actions";
 import { SearchBar } from "../components/molecules/search-bar";
@@ -38,7 +37,6 @@ const Home = (state: HomeStateType) => {
         </div>
     );
 };
-
 
 const mapStateToProps = (state: HomeStateType) => {
     return { countries: Object.values(state.countries) };

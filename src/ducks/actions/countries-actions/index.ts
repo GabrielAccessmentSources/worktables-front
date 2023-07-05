@@ -3,23 +3,13 @@ const monday = mondaySdk();
 
 import { FETCH_COUNTRIES, FETCH_COUNTRY_DETAILS } from "../types";
 import { ResponseDataType, ItemType, DispatchType } from "../../../helpers/ducks-types";
+import { GetCountriesQuery, GetCountryDetailsQuery } from "../../../api/queries/queries";
 
 export const fetchCountries = () => async (dispatch: ({ type, payload }: DispatchType) => void) => {
     try {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        const response: ResponseDataType = await monday.api(`
-                query { 
-                    boards { 
-                        id, 
-                        name, 
-                        items { 
-                            id, 
-                            name,
-                        }
-                    } 
-                }`
-        );
+        const response: ResponseDataType = await monday.api(GetCountriesQuery);
         const items: Array<ItemType> = response.data.boards[0].items;
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -34,24 +24,9 @@ export const fetchCountries = () => async (dispatch: ({ type, payload }: Dispatc
 export const fetchCountryDetails = (id: string) => async (dispatch: ({ type, payload }: DispatchType) => void) => {
     try{
 
-        const response = await monday.api(`
-          query($id: Int!) { 
-            boards {
-              id
-              name
-              items(ids: [$id]){
-                id
-                name,
-                column_values {
-                    id,
-                    value,
-                    title,
-                    text,
-                }
-              }
-            }
-          }
-        `, { variables: { id: parseInt(id) } });
+        const response = await monday.api(GetCountryDetailsQuery,
+            { variables: { id: parseInt(id) } }
+        );
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore

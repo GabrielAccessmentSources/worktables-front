@@ -1,4 +1,4 @@
-import React, { useMemo, useState, memo, useCallback } from "react";
+import React, { useMemo, useState, useCallback } from "react";
 import { List, ListItem } from "monday-ui-react-core";
 
 import CustomModal from "./modal";

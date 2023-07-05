@@ -62,3 +62,9 @@ export type ModalStateType = {
 export type OwnPropsType = {
     countryId: string;
 }
+
+export type SearchEventType = {
+    target: {
+        value: string
+    }
+}
